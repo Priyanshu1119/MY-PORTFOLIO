@@ -1,0 +1,528 @@
+/* Section wrapper panel to match Skills */
+#projects {
+  /* optional if Skills uses a panel container */
+}
+
+/* Dark surface like Skills: reduce transparency, deepen color */
+.project-card {
+  /* previously: rgba(255,255,255,0.04) + blur */
+  background: rgba(20, 22, 26, 0.9);     /* near-opaque dark surface */
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 24px;
+  backdrop-filter: none;                  /* remove glass blur */
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+/* Slight lift on hover, keep same surface tone */
+.project-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+  background: rgba(20, 22, 26, 0.94);
+}
+
+/* Card body spacing like Skills */
+.project-card .card-body {
+  padding: 1.25rem 1.25rem 0.75rem 1.25rem;
+}
+
+.project-card .card-footer {
+  padding: 0.75rem 1.25rem 1.0rem 1.25rem;
+}
+
+/* Title and text contrast similar to Skills */
+.project-card .card-title {
+  color: #f6f7f9;
+}
+.project-card .text-body-secondary {
+  color: #c2c7d0 !important;
+}
+
+/* Pills and tech chips darker, less glow */
+.badge.bg-dark-subtle {
+  background: rgba(255,255,255,0.08) !important;
+  color: #d7dbe4 !important;
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+/* Featured/info tag pills match Skills accent */
+.badge.bg-success { background-color: #16a34a !important; color: #eafbe7 !important; }
+.badge.bg-info    { background-color: #0ea5e9 !important; color: #e6f7fe !important; }
+
+/* Optional: make the whole row sit on a soft panel like Skills */
+.projects-panel {
+  background: rgba(13, 15, 18, 0.92);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 28px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.45);
+  padding: 1.5rem;
+}
+
+/* 1) Gradient border on hover via ::before ring */
+.project-card {
+  position: relative;                      /* anchor for pseudo-element */
+  overflow: hidden;                        /* clip border glow */
+  will-change: transform, box-shadow;      /* smoother hover on GPU */
+}
+
+/* hidden by default */
+.project-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;                                /* full card */
+  padding: 1px;                            /* border thickness */
+  border-radius: 24px;                     /* match card radius */
+  background: radial-gradient(
+      120% 120% at 0% 0%,
+      #7c3aed 0%,
+      rgba(124, 58, 237, 0.0) 60%
+    ),
+    linear-gradient(135deg, #22d3ee, #a78bfa 40%, #f472b6);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);             /* create border cutout */
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 180ms ease, filter 180ms ease;
+  pointer-events: none;
+}
+
+/* show border on hover/focus-visible */
+.project-card:hover::before,
+.project-card:focus-visible::before {
+  opacity: 1;
+  filter: saturate(115%) brightness(110%);
+}
+
+/* 2) Animated subtle sheen across the card on hover */
+.project-card::after {
+  content: "";
+  position: absolute;
+  inset: -40% -60%;
+  background: conic-gradient(
+    from 180deg at 50% 50%,
+    rgba(255,255,255,0.06),
+    rgba(255,255,255,0.0) 30% 70%,
+    rgba(255,255,255,0.06) 100%
+  );
+  transform: rotate(0deg) translateZ(0);
+  opacity: 0;
+  transition: opacity 220ms ease, transform 6s linear;
+  pointer-events: none;
+}
+.project-card:hover::after {
+  opacity: 1;
+  transform: rotate(360deg) translateZ(0); /* slow conic sweep */
+}
+
+/* 3) Stronger hover elevation + slight scale */
+.project-card:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.5);
+}
+
+/* 4) Content hover accents */
+.project-card .card-title {
+  transition: color 140ms ease;
+}
+.project-card:hover .card-title {
+  color: #ffffff;
+}
+
+/* Tech chips glow a bit on hover of card */
+.project-card:hover .badge.bg-dark-subtle {
+  border-color: rgba(255,255,255,0.18);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.06) inset;
+}
+
+/* Code button appears a touch brighter on hover */
+.project-card .btn {
+  transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
+}
+.project-card:hover .btn {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+}
+
+/* 5) Accessible focus ring for keyboard users */
+.project-card:focus-visible {
+  outline: none;
+}
+.project-card:focus-visible::before {
+  opacity: 1;
+  filter: saturate(130%) brightness(115%);
+}
+
+/* 6) Panel hover (optional): soft glow on the group container */
+.projects-panel {
+  position: relative;
+}
+.projects-panel:hover {
+  box-shadow: 0 14px 48px rgba(0,0,0,0.55);
+  border-color: rgba(255,255,255,0.08);
+}
+
+/* ========== Section header chip ========== */
+.section-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(20, 22, 26, 0.9);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: #f5f7fa;
+}
+.section-chip.center {
+  display: inline-flex;
+  margin-inline: auto;
+}
+.section-subtitle {
+  color: #B8B8B8;
+  margin-top: 10px;
+}
+
+/* Animated dot inside the chip */
+.section-chip .chip-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 30%, #22d3ee, #a78bfa 60%, #f472b6);
+  box-shadow: 0 0 16px rgba(167,139,250,0.6), 0 0 28px rgba(34,211,238,0.35);
+}
+
+/* ========== Bigger, modern capsules (tags + stack) ========== */
+.badge,
+.badge.bg-dark-subtle {
+  font-size: 0.88rem;             /* bigger text */
+  padding: 8px 12px;              /* taller pill */
+  border-radius: 999px !important;
+  line-height: 1;
+}
+
+/* Feature labels get stronger color and weight */
+.badge.bg-success,
+.badge.bg-info {
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(34,211,238,0.18), inset 0 0 0 1px rgba(255,255,255,0.12);
+}
+
+/* New Cloud capsule style (use tag text 'Cloud') */
+.badge[data-tag="Cloud"] {
+  background: linear-gradient(135deg, #60a5fa, #22d3ee);
+  color: #0b1220;
+  font-weight: 800;
+  text-transform: none;
+  box-shadow: 0 6px 18px rgba(96,165,250,0.35);
+}
+
+/* Tech stack chips: stronger contrast and inner ring */
+.badge.bg-dark-subtle {
+  background: rgba(255,255,255,0.10) !important;
+  color: #e2e6ee !important;
+  border: 1px solid rgba(255,255,255,0.16);
+}
+
+/* Slight spacing improvements for stacks */
+.project-card .d-flex.flex-wrap.my-2 {
+  gap: 8px 10px;                  /* rows x columns gap */
+}
+
+/* Card titles a touch bigger for emphasis */
+.project-card .card-title {
+  font-size: 1.15rem;
+  letter-spacing: 0.2px;
+}
+
+/* ========== CTA buttons (gradient outline) ========== */
+.section-ctas {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+.cta-outline {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  color: #eaf1ff;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  transition: transform 140ms ease, color 140ms ease;
+}
+.cta-outline::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, #22d3ee, #a78bfa 40%, #f472b6);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0.85;
+}
+.cta-outline::after {
+  /* inner background */
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(20,22,26,0.9);
+  z-index: -1;
+}
+.cta-outline:hover {
+  transform: translateY(-1px);
+  color: #ffffff;
+}
+.cta-outline.alt::before {
+  background: linear-gradient(135deg, #34d399, #22d3ee 50%, #a78bfa);
+}
+
+/* ========== Card header row (date + icon) spacing ========== */
+.project-card .text-muted small {
+  font-size: 0.92rem;
+}
+
+/* ========== Panel ring hover harmonized ========== */
+.projects-panel {
+  backdrop-filter: blur(4px);
+}
+
+/* Optional: make the entire “Featured” block sit in its own panel too */
+#projects .projects-panel + .section-chip.center {
+  margin-top: 18px;
+}
+
+/* Centered thick divider under each chip heading */
+.section-chip {
+  padding: 12px 18px;               /* slightly bigger */
+  font-size: 1.05rem;
+}
+.section-subtitle {
+  margin: 12px 0 18px 0;
+}
+.section-chip + .section-subtitle::after,
+.section-chip.center + .section-subtitle::after {
+  content: "";
+  display: block;
+  width: min(820px, 92%);
+  height: 3px;                      /* thicker line */
+  margin: 14px auto 0 auto;         /* centered */
+  border-radius: 3px;
+  background: linear-gradient(90deg, #22d3ee, #a78bfa 50%, #f472b6);
+  opacity: 0.9;
+}
+
+/* If you use the heading without subtitle (e.g., More Projects), add a utility: */
+.section-chip.center::after {
+  content: "";
+  display: block;
+  width: min(820px, 92%);
+  height: 3px;
+  margin: 14px auto 0 auto;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #22d3ee, #a78bfa 50%, #f472b6);
+  opacity: 0.9;
+}
+
+/* Larger CTA buttons */
+.cta-outline.cta-lg {
+  padding: 14px 22px;
+  font-size: 1.02rem;
+}
+
+/* Slightly larger badge chips everywhere for readability */
+.badge,
+.badge.bg-dark-subtle {
+  font-size: 0.92rem;
+  padding: 9px 12px;
+}
+
+/* Footer buttons a touch larger */
+.project-card .btn {
+  padding: 8px 14px;
+  font-size: 0.95rem;
+}
+
+/* Neutral tag and tech chips */
+.pill-neutral {
+  background: rgba(255,255,255,0.12) !important;
+  color: #e8edf6 !important;
+  border: 1px solid rgba(255,255,255,0.14);
+  font-weight: 700;
+  font-size: 0.92rem;
+  padding: 7px 12px;
+}
+.chip-neutral {
+  background: rgba(255,255,255,0.10);
+  color: #e2e7ee;
+  border: 1px solid rgba(255,255,255,0.16);
+  font-size: 0.92rem;
+  padding: 7px 12px;
+}
+
+/* Section header box */
+.section-header-box {
+  display: grid;
+  place-items: center;
+  row-gap: 10px;
+  margin: 0 auto 16px auto;
+  padding: 14px 18px;
+  width: min(880px, 92%);
+  background: rgba(20,22,26,0.9);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 999px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+}
+.section-header-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #f5f7fa;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+.section-header-sub {
+  margin: 0;
+  color: #b8b8b8;
+  font-size: 0.98rem;
+}
+
+/* Centered, thicker divider under header box (no rainbow) */
+.section-header-line {
+  width: 96%;
+  height: 3px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.12);
+}
+
+/* Ensure CTAs are prominent and centered */
+.section-ctas {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+.cta-outline.cta-lg { padding: 14px 22px; font-size: 1.02rem; }
+
+/* Optional: smooth scroll for the Collaborate anchor */
+html { scroll-behavior: smooth; }
+
+/* Big, fluid heading inside section-header-box */
+.section-header-title {
+  font-size: clamp(28px, 2.4vw + 10px, 52px); /* scales with viewport */
+  line-height: 1.1;
+}
+
+/* Remove divider lines under headers */
+.section-header-line { display: none; }
+
+/* Center the 'More Projects' header box just like Featured */
+.section-header-box { margin: 0 auto 18px auto; }
+
+.projects-heading {
+  margin: 0 auto 18px auto;
+  text-align: center;
+  color: #ffffff;
+  font-weight: 800;
+  line-height: 1.1;
+  font-size: clamp(30px, 3.2vw + 8px, 64px);
+}
+.section-header-line,
+.section-header-box { display: none !important; }
+
+
+/* Base for tag-colored pills */
+.tag-colored {
+  font-weight: 800;
+  color: #0b1220 !important;   /* dark text for bright pills by default */
+  border: none;
+}
+
+/* Tag-specific hues */
+.tag-colored[data-label="AI/ML"] {
+  background: #22d3ee !important;       /* cyan info-like */    /* info */
+}
+.tag-colored[data-label="Fullstack"] {
+  background: #34d399 !important;       /* green success-like */ /* success */
+}
+.tag-colored[data-label="Web App"] {
+  background: #60a5fa !important;       /* blue */              /* primary */
+}
+.tag-colored[data-label="E-commerce"] {
+  background: #C75F5F !important;       /* pink */
+}
+.tag-colored[data-label="Cloud"] ,
+.tag-colored[data-label="Cloud Storage"] {
+  background: #38bdf8 !important;       /* sky */
+}
+.tag-colored[data-label="Secure File Access"] {
+  background: #a78bfa !important;       /* purple */
+}
+.tag-colored[data-label="Workflow Automation"] {
+  background: #f59e0b !important;       /* amber */
+}
+.tag-colored[data-label="Data Processing"] {
+  background: #FFB3B3 !important;       /* orange */
+}
+
+/* If a tag is darker, switch text to white for contrast */
+.tag-colored[data-label="Secure File Access"],
+.tag-colored[data-label="E-commerce"] {
+  color: #ffffff !important;
+}
+
+/* Keep tech stack chips neutral */
+.chip-neutral {
+  background: rgba(255,255,255,0.10);
+  color: #e2e7ee;
+  border: 1px solid rgba(255,255,255,0.16);
+  font-size: 0.92rem;
+  padding: 7px 12px;
+  font-weight: 600;
+}
+
+/* Slightly less rounded panel same as CTA look */
+.panel-tight {
+  border-radius: 22px;            /* less than your previous 28/64 */
+}
+
+/* Subtitle under Featured heading */
+.projects-subheading {
+  color: #b8b8b8;
+  margin: 6px 0 8px 0;
+  font-size: 1rem;
+}
+
+/* CTA compact bar replacing Collaborate */
+.cta-bar {
+  margin-top: 22px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  justify-content: center;
+  width: min(920px, 96%);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 14px 16px;
+  background: rgba(20,22,26,0.9);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;            /* modest radius */
+  box-shadow: 0 8px 28px rgba(0,0,0,0.35);
+}
+.cta-bar-text {
+  color: #e7ecf5;
+  font-weight: 600;
+}
